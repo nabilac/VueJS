@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Belajar Vue JS - 1</title>
+    <style>
+        .active{
+            background: salmon;
+            border: 0;
+            padding: 5px;
+        }
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+        <header>
+            <img v-bind:src="gambar" alt="">
+
+            <p v-text="bilangan"></p>
+            <p>Bilangan ini termasuk bilangan {{infoBilangan}}</p>
+
+            <hr>
+
+            <h1>Event</h1>
+            <p>
+                <button v-on:click="handleclick">Klik</button>
+            </p>
+
+            <hr>
+
+            <h1>Class Binding</h1>
+            <p>
+                <button v-bind:class = "{active: menu === 'home'}" v-on:click = "onclickhome">Home</button>
+                <button v-bind:class = "{active: menu === 'about'}" v-on:click = "onclickabout">About</button>
+                <button v-bind:class = "{active: menu === 'blog'}" v-on:click = "onclickblog">Blog</button>
+            </p>
+
+            <hr>
+
+            <h1>Two way Binding</h1>
+            <p v-text = "name"></p>
+            <p>
+                <input type="text" v-model = "name"/>
+            </p>
+            <p>{{kelas}}</p>
+            <p>
+                <label><input type="checkbox" value="ReactJS" v-model = "kelas"/>ReactJS</label>
+                <label><input type="checkbox" value="VueJS" v-model = "kelas"/>VueJS</label>
+                <label><input type="checkbox" value="Angular" v-model = "kelas"/>Angular</label>
+            </p>
+
+            <hr>
+
+            <h1>Perulangan v-for</h1>
+            <p>
+                <ul>
+                    <li v-for = "item in DB" v-text = "item"></li>
+                </ul>
+            </p>
+
+            <hr>
+
+            <h1>Perulangan v-for - mengakses index</h1>
+            <p v-for = "(item,index) in DB">{{index+1}} . {{item}}</p>
+
+            <hr>
+
+            <h1>Latihan Directive v-for</h1>
+            <h3>Bilangan genap dari : {{numbers}}</h3>
+            <ul>
+                <li v-for = "item in caribilangangenap(numbers)" v-text = "item"></li>
+            </ul>
+
+            <hr>
+
+            <h1>Conditional Rendering v-if & v-else</h1>
+            <p>
+                <ul v-if = "laptop.length > 0">
+                    <li v-for = "item in laptop" v-text = "item"></li>
+                </ul>
+                <ul v-else>
+                    <li>Data laptop belum tersedia</li>
+                </ul>
+            </p>
+
+            <hr>
+
+            <h1>Penggunaan Object Event</h1>
+            <a href="#" v-bind:class = "{active: menu === 'home'}" v-on:click.prevent = "gantimenu('home')">Home</a>
+            <a href="#" v-bind:class = "{active: menu === 'about'}" v-on:click.prevent  = "gantimenu('about')">About</a>
+            <a href="#" v-bind:class = "{active: menu === 'blog'}" v-on:click.prevent  = "gantimenu('blog')">Blog</a>
+
+            <hr>
+
+            <h1>Key Modifiers - Form Submit</h1>
+            <p><input type="text" placeholder="Masukan Bahasa Pemrograman" v-on:keyup.enter="submit" v-model="bahasapemrogramanbaru"/></p>
+            <ul>
+                <li v-for = "item in bahasapemrograman" v-text = "item"></li>
+            </ul>
+
+        </header>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <script>
+        const vm = new Vue({
+            el : '#app',
+            data : {
+                name : 'abcd',
+                message : 'hello!',
+                qty : 3,
+                namaDepan : 'Baso',
+                namaBelakang : ' Aci',
+                bilangan : 3,
+                gambar : 'images/logo.png',
+                menu : 'home',
+                kelas : [],
+                DB : ['Oracle', 'MySql', 'SqlServer'],
+                numbers : [1,2,3,4,5],
+                laptop : ['Lenovo', 'HP', 'Asus'],
+                bahasapemrograman : [],
+                bahasapemrogramanbaru : ""
+            },
+            methods : {
+                getname : function(){
+                    return 'hello, ' + this.name
+                },
+                ubahnama : function(namaBaru){
+                    this.name = namaBaru
+                    return this.getname()
+                },
+                handleclick : function(){
+                    this.bilangan++
+                },
+                onclickhome: function(){
+                    this.menu = 'home'
+                },
+                onclickabout: function(){
+                    this.menu = 'about'
+                },
+                onclickblog: function(){
+                    this.menu = 'blog'
+                },
+                caribilangangenap: function(data){
+                    return data.filter(angka => {
+                        return angka % 2 === 0
+                    })
+                },
+                gantimenu: function(data){
+                    this.menu = data
+                },
+                submit: function(event){
+                    let text = event.target.value
+                    this.bahasapemrograman.push(this.bahasapemrogramanbaru)
+                }
+            },
+            computed : {
+                totalBayar : function(){
+                    return this.qty * 10000
+                },
+                namaLengkap : function(){
+                    return this.namaDepan + this.namaBelakang
+                },
+                infoBilangan : function(){
+                    return this.bilangan%2 === 0 ? 'Genap' : 'Ganjil'
+                }
+            }
+        })
+    </script>
+  </body>
+</html>

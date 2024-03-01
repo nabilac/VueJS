@@ -1,0 +1,10 @@
+Python Document
+
+- tools yang di perlukan hanya visual studio code
+- untuk dokumentasi bisa lihat di sini : https://code.visualstudio.com/docs/python/python-tutorial
+
+
+
+
+- python bisa di gunakan di server side beda dengan html yang hasil nya bisa di lihat di browser
+- hasil dari python di lihat di terminal

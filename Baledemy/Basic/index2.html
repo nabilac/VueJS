@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Belajar Vue JS - 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo&display=swap" rel="stylesheet">
+    <style>
+        body{
+            margin: 5%;
+            font-family: 'Arimo', sans-serif;
+        }
+        .active{
+            background: salmon;
+            border: 0;
+            padding: 5px;
+        }
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+        <header-component gambar = "images/logo.png"></header-component>
+
+        <main>
+            <bahasa-pemrograman></bahasa-pemrograman>
+            <home></home>
+        </main>
+
+        <footer-componnet></footer-componnet>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const Home = {
+            template : '<div>Home...</div>'
+        }
+
+        Vue.component('header-component', {
+            props : ['gambar'],
+            template : `
+                <header>
+                    <img v-bind:src="gambar" alt="">
+                    <p v-text="judul"></p>
+                </header>
+            `,
+            data : function(){
+                return {
+                    judul : 'The Progressive JavaScript Framework'
+                }
+            }
+        })
+
+        Vue.component('footer-componnet', {
+            template : `
+                <footer id="footer">
+                    <p>Copyright 2020</p>
+                </footer>
+            `
+        })
+
+        Vue.component('bahasa-pemrograman', {
+            template : `
+                <div>
+                    <h1>Key Modifiers - Form Submit</h1>
+                    <p><input type="text" placeholder="Masukan Bahasa Pemrograman" v-on:keyup.enter="submit" v-model="bahasapemrogramanbaru"/></p>
+                    <ul>
+                        <li v-for = "item in bahasapemrograman" v-text = "item"></li>
+                    </ul>
+                </div>
+            `,
+            data : function(){
+                return{
+                    bahasapemrograman : [],
+                    bahasapemrogramanbaru : ""
+                }
+            },
+            methods : {
+                submit: function(event){
+                    let text = event.target.value
+                    this.bahasapemrograman.push(this.bahasapemrogramanbaru)
+                }
+            }
+        })
+
+        const vm = new Vue({
+            el : '#app',
+            components : {
+                'home' : Home
+            },
+            data : {
+            },
+            methods : {
+            },
+            computed : {
+            }
+        })
+    </script>
+  </body>
+</html>
